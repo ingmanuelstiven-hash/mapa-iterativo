@@ -64,12 +64,25 @@ body {
   overflow: visible;
 }
 
+/* Custom Cursor for the map container */
+.mapa-procesos-wrapper {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23ffffff" stroke="%233b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>') 16 16, auto !important;
+}
+
+/* Pulsing effect to highlight interactive elements */
+@keyframes mapPulse {
+  0% { filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.4)) brightness(1.0); }
+  50% { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8)) brightness(1.05); }
+  100% { filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.4)) brightness(1.0); }
+}
+
 /* EFECTOS HOVER Y MÓVIL AL TOCAR (Directamente en SVG g[id]) */
 .svg-map-container g[id^="G_"] {
-    cursor: pointer !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%233b82f6" stroke="%23ffffff" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="%23ffffff"/></svg>') 16 32, pointer !important;
     transform-origin: 50% 50% !important; /* Centro relativo */
     transform-box: fill-box !important;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease !important;
+    animation: mapPulse 3s infinite ease-in-out;
 }
 
 @media (hover: hover) {
@@ -77,12 +90,14 @@ body {
         transform: scale(1.03) !important; 
         filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.4)) brightness(1.1) !important; 
         z-index: 100;
+        animation: none; /* Stop pulsing on hover */
     }
 }
 .svg-map-container g[id^="G_"].activo-movil {
     transform: scale(1.03) !important; 
     filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.4)) brightness(1.1) !important; 
     z-index: 100;
+    animation: none;
 }
 
 /* TOOLTIP RESPONSIVE (LETRERO FLOTANTE) */

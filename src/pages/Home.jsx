@@ -1,79 +1,56 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Map, ArrowRight, MapPin } from 'lucide-react';
+import { Map, ArrowRight, Compass, Camera, TreePine } from 'lucide-react';
 
 export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 relative overflow-hidden flex flex-col font-sans">
+    <div className="flex flex-col font-sans w-full h-full flex-1">
       
-      {/* Decorative background elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-200/40 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-200/40 rounded-full blur-[100px] pointer-events-none" />
+      {/* Hero Section con Banner ocupando el 100% del espacio restante */}
+      <section className="relative w-full flex-1 flex items-center justify-center overflow-hidden">
+        {/* Imagen de Fondo (Placeholder de Unsplash de alta calidad) */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-1000 hover:scale-105"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop')" }}
+        />
+        {/* Overlay oscuro para legibilidad */}
+        <div className="absolute inset-0 bg-slate-900/40" />
 
-      {/* Navbar (simulated) */}
-      <nav className="w-full px-6 py-4 flex items-center justify-between relative z-10">
-        <div className="flex items-center gap-2 text-slate-800 font-bold text-xl">
-          <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center text-white">
-            <Map size={20} />
-          </div>
-          NexusTour
-        </div>
-      </nav>
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-white mt-[-5vh]">
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-sm md:text-lg font-bold text-blue-200 uppercase tracking-[0.3em] mb-4 drop-shadow-md">
+              Bienvenidos
+            </h2>
+            <h1 className="text-5xl md:text-8xl font-black mb-6 drop-shadow-2xl">
+              Explora Nuestro <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-emerald-300">Territorio</span>
+            </h1>
+            <p className="text-lg md:text-2xl text-slate-100 mb-12 font-medium max-w-2xl mx-auto drop-shadow-lg leading-relaxed">
+              Descubre los sitios turísticos más impresionantes, planifica tu ruta e interactúa con el mapa de forma dinámica.
+            </p>
+          </motion.div>
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center relative">
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="mb-8"
-          >
-            <MapPin size={80} className="text-amber-500 mx-auto drop-shadow-lg" />
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ y: -30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-black text-slate-800 tracking-tight drop-shadow-sm mb-6"
-          >
-            Explora el <span className="text-amber-500 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-600">Mapa Turístico</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-slate-600 max-w-2xl font-medium drop-shadow-sm mb-12"
-          >
-            Descubre los puntos de interés e interactúa con el territorio de forma fácil y dinámica.
-          </motion.p>
-
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4"
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <button
               onClick={() => navigate('/mapa')}
-              className="group relative px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl shadow-amber-500/30 flex items-center gap-3 overflow-hidden"
+              className="group relative px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-xl transition-all duration-300 shadow-2xl shadow-blue-900/50 flex items-center gap-3 mx-auto overflow-hidden"
             >
               <span className="relative z-10">Explorar Mapa</span>
-              <ArrowRight size={22} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={24} className="relative z-10 group-hover:translate-x-1 transition-transform" />
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </button>
           </motion.div>
         </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="w-full text-center py-6 text-slate-400 text-sm relative z-10">
-        <p>© {new Date().getFullYear()} NexusTour - Mapa Interactivo. Todos los derechos reservados.</p>
-      </footer>
+      </section>
     </div>
   );
 }

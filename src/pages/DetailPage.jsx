@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Info, Image as ImageIcon, Briefcase, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Info, Image as ImageIcon, PlayCircle, Compass } from 'lucide-react';
 import { getLugarById } from '../services/api';
 
 export default function DetailPage() {
@@ -9,7 +9,7 @@ export default function DetailPage() {
   const navigate = useNavigate();
   const [lugar, setLugar] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('general');
+  const [activeTab, setActiveTab] = useState('informacion');
 
   useEffect(() => {
     setLoading(true);
@@ -25,7 +25,7 @@ export default function DetailPage() {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex-1 flex items-center justify-center bg-slate-50">
         <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
       </div>
     );
@@ -33,7 +33,7 @@ export default function DetailPage() {
 
   if (!lugar) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center bg-slate-50 gap-4">
+      <div className="flex-1 flex flex-col items-center justify-center bg-slate-50 gap-4">
         <h1 className="text-2xl font-bold text-slate-700">Lugar no encontrado</h1>
         <button onClick={() => navigate('/mapa')} className="text-blue-600 hover:underline flex items-center gap-2 font-medium">
           <ArrowLeft size={18} /> Volver al mapa
@@ -43,15 +43,16 @@ export default function DetailPage() {
   }
 
   const tabs = [
-    { id: 'general', label: 'General', icon: Info },
+    { id: 'informacion', label: 'Información', icon: Info },
     { id: 'galeria', label: 'Galería', icon: ImageIcon },
-    { id: 'servicios', label: 'Servicios', icon: Briefcase },
+    { id: 'video', label: 'Video', icon: PlayCircle },
+    { id: '360', label: 'Vista 360°', icon: Compass },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 pb-20">
+    <div className="flex-1 bg-slate-50 text-slate-800 pb-12 w-full flex flex-col">
       {/* Hero Section */}
-      <div className="relative h-64 md:h-80 w-full overflow-hidden bg-white shadow-sm">
+      <div className="relative h-64 md:h-80 w-full overflow-hidden bg-white shadow-sm shrink-0">
         <img 
           src={lugar.galeria[0]} 
           alt={lugar.nombre} 
@@ -83,9 +84,9 @@ export default function DetailPage() {
         </div>
       </div>
 
-      {/* Tabs System */}
-      <div className="container mx-auto px-4 md:px-6 -mt-6 relative z-10">
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden">
+      {/* Tabs System - MODIFICADO AL 95% DEL ANCHO */}
+      <div className="container mx-auto px-4 md:px-6 -mt-6 relative z-10 flex-1">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-[95%] max-w-none mx-auto">
           <div className="flex border-b border-slate-100 bg-slate-50/50">
             {tabs.map((tab) => (
               <button
@@ -107,7 +108,7 @@ export default function DetailPage() {
             ))}
           </div>
 
-          <div className="p-6 md:p-10 min-h-[300px]">
+          <div className="p-6 md:p-10 min-h-[400px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -116,10 +117,10 @@ export default function DetailPage() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                {activeTab === 'general' && (
+                {activeTab === 'informacion' && (
                   <div className="space-y-6">
                     <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                      Descripción del Proceso
+                      Descripción del Lugar
                     </h3>
                     <p className="text-slate-600 leading-relaxed text-lg">
                       {lugar.descripcion}
@@ -129,12 +130,12 @@ export default function DetailPage() {
                         <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Estado</span>
                         <span className="text-emerald-600 font-semibold flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                          Activo
+                          Abierto al Público
                         </span>
                       </div>
                       <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm">
-                        <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Responsable</span>
-                        <span className="text-slate-700 font-semibold">Coordinación de Área</span>
+                        <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Tipo de Atractivo</span>
+                        <span className="text-slate-700 font-semibold">Turismo Local</span>
                       </div>
                     </div>
                   </div>
@@ -162,29 +163,31 @@ export default function DetailPage() {
                     </div>
                   </div>
                 )}
-
-                {activeTab === 'servicios' && (
+                
+                {activeTab === 'video' && (
                   <div className="space-y-4">
-                    <h3 className="text-2xl font-bold text-slate-800 mb-6">Listado de Servicios</h3>
-                    <div className="grid gap-4">
-                      {lugar.servicios.map((servicio, index) => (
-                        <motion.div 
-                          key={index}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="flex items-center justify-between p-5 rounded-xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all cursor-pointer group"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold group-hover:bg-blue-100 transition-colors">
-                              {index + 1}
-                            </div>
-                            <span className="text-slate-700 font-semibold group-hover:text-blue-700 transition-colors">{servicio}</span>
-                          </div>
-                          <ChevronRight size={20} className="text-slate-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
-                        </motion.div>
-                      ))}
+                    <h3 className="text-2xl font-bold text-slate-800 mb-6">Recorrido en Video</h3>
+                    <div className="w-full aspect-video rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-900 flex items-center justify-center">
+                      <PlayCircle size={64} className="text-white/50 hover:text-white transition-colors cursor-pointer" />
                     </div>
+                  </div>
+                )}
+
+                {activeTab === '360' && (
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold text-slate-800 mb-6">Visor 360° Interactivo</h3>
+                    <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 flex items-center justify-center relative">
+                      <iframe 
+                        width="100%" 
+                        height="100%" 
+                        style={{ border: 'none' }}
+                        allowFullScreen 
+                        src={`/360/index.html?image=${lugar.id}.jpg`}
+                      ></iframe>
+                    </div>
+                    <p className="text-sm text-slate-500 mt-2 flex items-center justify-center gap-2">
+                      <Compass size={16} /> Arrastra la imagen para mirar a tu alrededor en todas direcciones.
+                    </p>
                   </div>
                 )}
               </motion.div>
