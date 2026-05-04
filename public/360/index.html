@@ -10,7 +10,7 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #e2e8f0; }
         #panorama { width: 100%; height: 100%; }
-        .error-msg { font-family: sans-serif; display: flex; align-items: center; justify-center; height: 100%; color: #64748b; padding: 20px; text-align: center; }
+        .error-msg { font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100%; color: #64748b; padding: 20px; text-align: center; }
     </style>
 </head>
 <body>
@@ -18,27 +18,31 @@
 <div id="panorama"></div>
 
 <script>
-    // Obtener el nombre de la imagen de la URL (?image=nombre_del_archivo.jpg)
+    // Obtener la ruta completa de la imagen de la URL (?image=...)
     const urlParams = new URLSearchParams(window.location.search);
-    const imageName = urlParams.get('image') || 'default.jpg';
+    const imagePath = urlParams.get('image') || '';
 
-    // Iniciar Pannellum
-    pannellum.viewer('panorama', {
-        "type": "equirectangular",
-        "panorama": "./" + imageName,
-        "autoLoad": true,
-        "pitch": 0,
-        "yaw": 0,
-        "hfov": 100,
-        "showZoomCtrl": false,
-        "fallback": "fallback.jpg", // Imagen por si falla
-        "strings": {
-            "loadButtonLabel": "Cargar Vista 360",
-            "loadingLabel": "Cargando imagen esférica...",
-            "genericWebGLError": "Tu navegador no soporta el visor 360°",
-            "textureLoadError": "La imagen (" + imageName + ") no fue encontrada en la carpeta /public/360/."
-        }
-    });
+    if (!imagePath) {
+        document.getElementById('panorama').innerHTML = '<div class="error-msg">No se proporcionó ninguna imagen 360.</div>';
+    } else {
+        // Iniciar Pannellum con la ruta proporcionada desde la base de datos
+        pannellum.viewer('panorama', {
+            "type": "equirectangular",
+            "panorama": imagePath,
+            "autoLoad": true,
+            "pitch": 0,
+            "yaw": 0,
+            "hfov": 100,
+            "showZoomCtrl": false,
+            "fallback": "fallback.jpg", // Imagen por si falla
+            "strings": {
+                "loadButtonLabel": "Cargar Vista 360",
+                "loadingLabel": "Cargando imagen esférica...",
+                "genericWebGLError": "Tu navegador no soporta el visor 360°",
+                "textureLoadError": "La imagen no fue encontrada en la ruta especificada: " + imagePath
+            }
+        });
+    }
 </script>
 
 </body>

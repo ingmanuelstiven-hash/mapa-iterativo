@@ -54,7 +54,7 @@ export default function DetailPage() {
       {/* Hero Section */}
       <div className="relative h-64 md:h-80 w-full overflow-hidden bg-white shadow-sm shrink-0">
         <img 
-          src={lugar.galeria[0]} 
+          src={lugar.banner || lugar.galeria[0]} 
           alt={lugar.nombre} 
           className="w-full h-full object-cover opacity-80 blur-[2px] scale-105"
         />
@@ -143,20 +143,24 @@ export default function DetailPage() {
 
                 {activeTab === 'galeria' && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {lugar.galeria.map((img, index) => (
-                      <motion.div 
-                        key={index}
-                        whileHover={{ scale: 1.02 }}
-                        className="aspect-video rounded-xl overflow-hidden border border-slate-200 shadow-sm group cursor-zoom-in relative"
-                      >
-                        <img 
-                          src={img} 
-                          alt={`Foto ${index + 1}`} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                      </motion.div>
-                    ))}
+                    {lugar.galeria && lugar.galeria.length > 0 ? (
+                      lugar.galeria.map((img, index) => (
+                        <motion.div 
+                          key={index}
+                          whileHover={{ scale: 1.02 }}
+                          className="aspect-video rounded-xl overflow-hidden border border-slate-200 shadow-sm group cursor-zoom-in relative"
+                        >
+                          <img 
+                            src={img} 
+                            alt={`Foto ${index + 1}`} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                        </motion.div>
+                      ))
+                    ) : (
+                      <p className="text-slate-500 col-span-full">No hay imágenes en la galería.</p>
+                    )}
                     <div className="aspect-video rounded-xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400 hover:text-slate-500 hover:bg-slate-100 transition-colors cursor-pointer">
                       <ImageIcon size={40} className="opacity-50" />
                       <span className="text-sm font-medium">Añadir más fotos</span>
@@ -167,8 +171,23 @@ export default function DetailPage() {
                 {activeTab === 'video' && (
                   <div className="space-y-4">
                     <h3 className="text-2xl font-bold text-slate-800 mb-6">Recorrido en Video</h3>
-                    <div className="w-full aspect-video rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-900 flex items-center justify-center">
-                      <PlayCircle size={64} className="text-white/50 hover:text-white transition-colors cursor-pointer" />
+                    <div className="w-full aspect-video rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 flex items-center justify-center">
+                      {lugar.video ? (
+                        <iframe 
+                          width="100%" 
+                          height="100%" 
+                          src={lugar.video} 
+                          title="YouTube video player" 
+                          frameBorder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowFullScreen
+                        ></iframe>
+                      ) : (
+                        <div className="text-center text-slate-400">
+                          <PlayCircle size={64} className="mx-auto mb-2 opacity-50" />
+                          <p>Video no disponible para este lugar</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -177,13 +196,20 @@ export default function DetailPage() {
                   <div className="space-y-4">
                     <h3 className="text-2xl font-bold text-slate-800 mb-6">Visor 360° Interactivo</h3>
                     <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 flex items-center justify-center relative">
-                      <iframe 
-                        width="100%" 
-                        height="100%" 
-                        style={{ border: 'none' }}
-                        allowFullScreen 
-                        src={`/360/index.html?image=${lugar.id}.jpg`}
-                      ></iframe>
+                      {lugar.imagen360 ? (
+                        <iframe 
+                          width="100%" 
+                          height="100%" 
+                          style={{ border: 'none' }}
+                          allowFullScreen 
+                          src={`/360/index.html?image=${encodeURIComponent(lugar.imagen360)}`}
+                        ></iframe>
+                      ) : (
+                        <div className="text-center text-slate-400">
+                          <Compass size={64} className="mx-auto mb-2 opacity-50" />
+                          <p>Vista 360 no disponible para este lugar</p>
+                        </div>
+                      )}
                     </div>
                     <p className="text-sm text-slate-500 mt-2 flex items-center justify-center gap-2">
                       <Compass size={16} /> Arrastra la imagen para mirar a tu alrededor en todas direcciones.
