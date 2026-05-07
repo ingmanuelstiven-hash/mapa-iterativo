@@ -1,49 +1,153 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visor 360</title>
     <!-- Incluir Pannellum CSS y JS desde CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #e2e8f0; }
-        #panorama { width: 100%; height: 100%; }
-        .error-msg { font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100%; color: #64748b; padding: 20px; text-align: center; }
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        #panorama {
+            width: 100%;
+            height: 100%;
+        }
+
+        .error-msg {
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #64748b;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Animación de la mano interactiva */
+        #hand-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hand-icon {
+            width: 48px;
+            height: 48px;
+            animation: swipe 2s infinite ease-in-out;
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+        }
+
+        .hand-text {
+            color: white;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: swipe 2s infinite ease-in-out;
+        }
+
+        @keyframes swipe {
+            0% {
+                transform: translateX(30px) rotate(5deg);
+            }
+
+            50% {
+                transform: translateX(-30px) rotate(-5deg);
+            }
+
+            100% {
+                transform: translateX(30px) rotate(5deg);
+            }
+        }
     </style>
 </head>
+
 <body>
 
-<div id="panorama"></div>
+    <div id="panorama"></div>
 
-<script>
-    // Obtener la ruta completa de la imagen de la URL (?image=...)
-    const urlParams = new URLSearchParams(window.location.search);
-    const imagePath = urlParams.get('image') || '';
+    <!-- Overlay de la mano -->
+    <div id="hand-overlay">
+        <svg class="hand-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15">
+            </path>
+        </svg>
+        <div class="hand-text">Arrastra para explorar</div>
+    </div>
 
-    if (!imagePath) {
-        document.getElementById('panorama').innerHTML = '<div class="error-msg">No se proporcionó ninguna imagen 360.</div>';
-    } else {
-        // Iniciar Pannellum con la ruta proporcionada desde la base de datos
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": imagePath,
-            "autoLoad": true,
-            "pitch": 0,
-            "yaw": 0,
-            "hfov": 100,
-            "showZoomCtrl": false,
-            "fallback": "fallback.jpg", // Imagen por si falla
-            "strings": {
-                "loadButtonLabel": "Cargar Vista 360",
-                "loadingLabel": "Cargando imagen esférica...",
-                "genericWebGLError": "Tu navegador no soporta el visor 360°",
-                "textureLoadError": "La imagen no fue encontrada en la ruta especificada: " + imagePath
-            }
-        });
-    }
-</script>
+    <script>
+        // Obtener la ruta completa de la imagen de la URL (?image=...)
+        const urlParams = new URLSearchParams(window.location.search);
+        const imagePath = urlParams.get('image') || '';
+        const initialYaw = parseFloat(urlParams.get('yaw')) || 0;
+        const initialPitch = parseFloat(urlParams.get('pitch')) || 0;
+
+        if (!imagePath) {
+            document.getElementById('panorama').innerHTML = '<div class="error-msg">No se proporcionó ninguna imagen 360.</div>';
+        } else {
+            // Iniciar Pannellum nativo
+            const viewer = pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "panorama": imagePath,
+                "autoLoad": true,
+                "pitch": initialPitch,
+                "yaw": initialYaw,
+                "hfov": 80,
+                "minHfov": 20,
+                "maxHfov": 100,
+                "showZoomCtrl": true,
+                "mouseZoom": true,
+                "autoRotate": -1.5, // Movimiento automático muy suave a la izquierda
+                "strings": {
+                    "loadButtonLabel": "Cargar Vista 360",
+                    "loadingLabel": "Cargando imagen esférica...",
+                    "genericWebGLError": "Tu navegador no soporta el visor 360°",
+                    "textureLoadError": "La imagen no fue encontrada en la ruta especificada: " + imagePath
+                }
+            });
+
+            // Ocultar la mano y detener auto-rotación al interactuar
+            const handOverlay = document.getElementById('hand-overlay');
+
+            viewer.on('mousedown', () => {
+                if (handOverlay) handOverlay.style.opacity = '0';
+            });
+            viewer.on('touchstart', () => {
+                if (handOverlay) handOverlay.style.opacity = '0';
+            });
+
+            // Ocultar la mano automáticamente después de unos segundos
+            setTimeout(() => {
+                if (handOverlay) handOverlay.style.opacity = '0';
+            }, 3500);
+        }
+    </script>
 
 </body>
+
 </html>

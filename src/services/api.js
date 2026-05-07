@@ -8,6 +8,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/ss1/1200/400',
     galeria: ['https://picsum.photos/seed/ss1/800/600', 'https://picsum.photos/seed/ss2/800/600'],
     imagen360: '/360/servicios-sociales.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -18,6 +20,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/sf1/1200/400',
     galeria: ['https://picsum.photos/seed/sf1/800/600', 'https://picsum.photos/seed/sf2/800/600'],
     imagen360: '/360/subsidio-familiar.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -28,6 +32,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/dir1/1200/400',
     galeria: ['https://picsum.photos/seed/dir1/800/600', 'https://picsum.photos/seed/dir2/800/600'],
     imagen360: '/360/direccion.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -37,7 +43,9 @@ const LUGARES_DB = [
     servicios: ['Seguimiento a Metas', 'Estadísticas', 'Proyectos'],
     banner: 'https://picsum.photos/seed/plan1/1200/400',
     galeria: ['https://picsum.photos/seed/plan1/800/600', 'https://picsum.photos/seed/plan2/800/600'],
-    imagen360: '/360/planeacion.jpg',
+    imagen360: 'https://images.unsplash.com/photo-1596263576925-d90d63691097?q=80&w=1622&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -47,7 +55,9 @@ const LUGARES_DB = [
     servicios: ['Soporte Técnico', 'Desarrollo de Software', 'Infraestructura'],
     banner: 'https://picsum.photos/seed/tic1/1200/400',
     galeria: ['https://picsum.photos/seed/tic1/800/600', 'https://picsum.photos/seed/tic2/800/600'],
-    imagen360: '/360/tic.jpg',
+    imagen360: '/360/prueba3.jpg',
+    yaw: 180,
+    pitch: -15,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -58,6 +68,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/jur1/1200/400',
     galeria: ['https://picsum.photos/seed/jur1/800/600', 'https://picsum.photos/seed/jur2/800/600'],
     imagen360: '/360/juridica.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -68,6 +80,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/ctrl1/1200/400',
     galeria: ['https://picsum.photos/seed/ctrl1/800/600', 'https://picsum.photos/seed/ctrl2/800/600'],
     imagen360: '/360/control-interno.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -78,6 +92,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/hum1/1200/400',
     galeria: ['https://picsum.photos/seed/hum1/800/600', 'https://picsum.photos/seed/hum2/800/600'],
     imagen360: '/360/humana.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -88,6 +104,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/cont1/1200/400',
     galeria: ['https://picsum.photos/seed/cont1/800/600', 'https://picsum.photos/seed/cont2/800/600'],
     imagen360: '/360/contratacion.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -98,6 +116,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/adm1/1200/400',
     galeria: ['https://picsum.photos/seed/adm1/800/600', 'https://picsum.photos/seed/adm2/800/600'],
     imagen360: '/360/administrativo.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -108,6 +128,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/fin1/1200/400',
     galeria: ['https://picsum.photos/seed/fin1/800/600', 'https://picsum.photos/seed/fin2/800/600'],
     imagen360: '/360/financiera-contable.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -118,6 +140,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/rec1/1200/400',
     galeria: ['https://picsum.photos/seed/rec1/800/600', 'https://picsum.photos/seed/rec2/800/600'],
     imagen360: '/360/recaudo-cobro-02.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -128,6 +152,8 @@ const LUGARES_DB = [
     banner: 'https://picsum.photos/seed/pres1/1200/400',
     galeria: ['https://picsum.photos/seed/pres1/800/600', 'https://picsum.photos/seed/pres2/800/600'],
     imagen360: '/360/presupuesto-tesoreria.jpg',
+    yaw: 0,
+    pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   }
 ];

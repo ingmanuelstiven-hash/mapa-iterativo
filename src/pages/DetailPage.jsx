@@ -85,8 +85,8 @@ export default function DetailPage() {
       </div>
 
       {/* Tabs System - MODIFICADO AL 95% DEL ANCHO */}
-      <div className="container mx-auto px-4 md:px-6 -mt-6 relative z-10 flex-1">
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-[95%] max-w-none mx-auto">
+      <div className="w-full px-4 md:px-[2.5%] -mt-6 relative z-10 flex-1">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-full mx-auto">
           <div className="flex border-b border-slate-100 bg-slate-50/50">
             {tabs.map((tab) => (
               <button
@@ -195,14 +195,14 @@ export default function DetailPage() {
                 {activeTab === '360' && (
                   <div className="space-y-4">
                     <h3 className="text-2xl font-bold text-slate-800 mb-6">Visor 360° Interactivo</h3>
-                    <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 flex items-center justify-center relative">
+                    <div className="w-full h-[500px] md:h-[75vh] min-h-[600px] rounded-xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 flex items-center justify-center relative">
                       {lugar.imagen360 ? (
                         <iframe 
                           width="100%" 
                           height="100%" 
                           style={{ border: 'none' }}
                           allowFullScreen 
-                          src={`/360/index.html?image=${encodeURIComponent(lugar.imagen360)}`}
+                          src={`/360/index.html?image=${encodeURIComponent(lugar.imagen360)}&yaw=${lugar.yaw || 0}&pitch=${lugar.pitch || 0}`}
                         ></iframe>
                       ) : (
                         <div className="text-center text-slate-400">

@@ -9,9 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/react-view360": "^3.0.4",
+    "@egjs/view360": "^3.6.4",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
-    "pannellum-react": "^1.2.4",
     "prop-types": "^15.8.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
