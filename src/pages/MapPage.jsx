@@ -24,7 +24,7 @@ export default function MapPage() {
 
   // Cargar el SVG dinámicamente
   useEffect(() => {
-    fetch('/mapa_procesos.svg')
+    fetch('/Mapa_Simijaca.svg')
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.text();
@@ -42,10 +42,9 @@ export default function MapPage() {
   // Calcular posición del PIN cuando se selecciona un lugar de la lista
   useEffect(() => {
     if (selectedId && svgContainerRef.current) {
-      // Intentar encontrar el ID en el SVG. El ID del SVG podría ser algo como G_nombre_lugar
-      // Necesitamos asegurar que el ID coincida con el nombre en el listado, asumiendo un formato.
-      const rawId = selectedId.replace(/-/g, '_');
-      const el = document.querySelector(`g[id*="${rawId}" i]`) || document.getElementById(`G_${rawId}`);
+      // Buscar coincidencia exacta o parcial insensible a mayúsculas
+      const el = document.querySelector(`g[id="${selectedId}" i]`) || 
+                 document.querySelector(`g[id*="${selectedId}" i]`);
 
       if (el) {
         const containerRect = svgContainerRef.current.getBoundingClientRect();
@@ -69,13 +68,16 @@ export default function MapPage() {
     if (!container) return;
 
     const handleEvent = (e) => {
-      // Buscar cualquier grupo SVG que tenga un ID que empiece por G_
-      const groupEl = e.target.closest('g[id^="G_"]');
+      // Buscar cualquier grupo SVG que tenga ID y que pertenezca a nuestra lista de Simijaca
+      const groupEl = e.target.closest('g[id]');
+      const isValid = groupEl && ['parque', 'iglesia', 'maria', 'cruz', 'sagrado', 'bahama', 'lajas'].includes(groupEl.id.toLowerCase());
+      const interactiveEl = isValid ? groupEl : null;
 
       if (e.type === 'mousemove' || e.type === 'mouseover' || e.type === 'touchmove') {
-        if (groupEl) {
-          const rawId = groupEl.id;
-          const cleanName = rawId.replace('G_', '').replace(/_/g, ' ');
+        if (interactiveEl) {
+          const rawId = interactiveEl.id;
+          const lugarEncontrado = lugares.find(l => l.id.toLowerCase() === rawId.toLowerCase());
+          const cleanName = lugarEncontrado ? lugarEncontrado.nombre : rawId;
 
           if (tooltip) {
             tooltip.classList.add('visible');
@@ -96,10 +98,10 @@ export default function MapPage() {
       }
 
       if (e.type === 'click' || e.type === 'touchend') {
-        if (groupEl) {
+        if (interactiveEl) {
           e.preventDefault();
           e.stopPropagation();
-          const slug = groupEl.id.replace('G_', '').toLowerCase().replace(/_/g, '-');
+          const slug = interactiveEl.id.toLowerCase();
           if (tooltip) tooltip.classList.remove('visible');
           navigate(`/lugar/${slug}`);
         }
@@ -217,7 +219,7 @@ export default function MapPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-xl font-black text-blue-600 leading-tight"
                   >
-                    {hoveredId.replace('G_', '').replace(/_/g, ' ')}
+                    {lugares.find(l => l.id.toLowerCase() === hoveredId.toLowerCase())?.nombre || hoveredId}
                   </motion.p>
                 ) : (
                   <p className="text-xs text-slate-500 font-medium leading-relaxed px-2">

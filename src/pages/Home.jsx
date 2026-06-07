@@ -13,7 +13,7 @@ export default function Home() {
         {/* Imagen de Fondo (Placeholder de Unsplash de alta calidad) */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-1000 hover:scale-105"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop')" }}
+          style={{ backgroundImage: "url('/simij.jpg')" }}
         />
         {/* Overlay oscuro para legibilidad */}
         <div className="absolute inset-0 bg-slate-900/40" />
