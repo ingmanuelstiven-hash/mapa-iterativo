@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Info, Image as ImageIcon, PlayCircle, Compass } from 'lucide-react';
+import { ArrowLeft, Info, Image as ImageIcon, PlayCircle, Compass, MapPin, Phone, Mail, Map } from 'lucide-react';
 import { getLugarById } from '../services/api';
 
 export default function DetailPage() {
@@ -122,22 +122,99 @@ export default function DetailPage() {
                     <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
                       Descripción del Lugar
                     </h3>
-                    <p className="text-slate-600 leading-relaxed text-lg">
+                    <div className="text-slate-600 leading-relaxed text-lg whitespace-pre-line">
                       {lugar.descripcion}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                      <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm">
-                        <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Estado</span>
-                        <span className="text-emerald-600 font-semibold flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                          Abierto al Público
-                        </span>
-                      </div>
-                      <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm">
-                        <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Tipo de Atractivo</span>
-                        <span className="text-slate-700 font-semibold">Turismo Local</span>
-                      </div>
                     </div>
+
+                    {(lugar.estado || lugar.tipoAtractivo) && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                        {lugar.estado && (
+                          <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            </div>
+                            <div>
+                              <span className="text-xs font-bold uppercase text-slate-400 block mb-0.5">Estado</span>
+                              <span className="text-emerald-600 font-semibold">{lugar.estado}</span>
+                            </div>
+                          </div>
+                        )}
+                        {lugar.tipoAtractivo && (
+                          <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                              <Info size={20} />
+                            </div>
+                            <div>
+                              <span className="text-xs font-bold uppercase text-slate-400 block mb-0.5">Tipo de Atractivo</span>
+                              <span className="text-slate-700 font-semibold">{lugar.tipoAtractivo}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {lugar.contacto && (
+                      <div className="mt-8 border-t border-slate-100 pt-6">
+                        <h4 className="text-xl font-bold text-slate-800 mb-4">Contacto</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          {lugar.contacto.direccion && (
+                            <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm flex items-start gap-3">
+                              <MapPin size={20} className="text-slate-400 mt-1 shrink-0" />
+                              <div>
+                                <span className="text-xs font-bold uppercase text-slate-400 block mb-0.5">Dirección</span>
+                                <span className="text-slate-700 font-semibold text-sm">{lugar.contacto.direccion}</span>
+                              </div>
+                            </div>
+                          )}
+                          {lugar.contacto.telefono && (
+                            <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm flex items-start gap-3">
+                              <Phone size={20} className="text-slate-400 mt-1 shrink-0" />
+                              <div>
+                                <span className="text-xs font-bold uppercase text-slate-400 block mb-0.5">Teléfono</span>
+                                <span className="text-slate-700 font-semibold text-sm">{lugar.contacto.telefono}</span>
+                              </div>
+                            </div>
+                          )}
+                          {lugar.contacto.email && (
+                            <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 shadow-sm flex items-start gap-3">
+                              <Mail size={20} className="text-slate-400 mt-1 shrink-0" />
+                              <div className="min-w-0">
+                                <span className="text-xs font-bold uppercase text-slate-400 block mb-0.5">Email</span>
+                                <span className="text-slate-700 font-semibold text-sm break-all">{lugar.contacto.email}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {lugar.comoLlegar && (
+                      <div className="mt-8 border-t border-slate-100 pt-6">
+                        <h4 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                          <Map size={22} className="text-blue-600" />
+                          Cómo Llegar
+                        </h4>
+                        <div className="flex flex-col gap-4">
+                          {lugar.comoLlegar.mapaIframe && (
+                            <div 
+                              className="w-full h-[350px] rounded-2xl overflow-hidden shadow-inner border border-slate-200"
+                              dangerouslySetInnerHTML={{ __html: lugar.comoLlegar.mapaIframe }}
+                            />
+                          )}
+                          {lugar.comoLlegar.link && (
+                            <a 
+                              href={lugar.comoLlegar.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all self-start shadow-md hover:shadow-lg gap-2 text-sm"
+                            >
+                              <MapPin size={18} />
+                              Ver en Google Maps
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 

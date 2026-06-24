@@ -32,15 +32,36 @@ const LUGARES_DB = [
   },
   {
     id: 'maria',
-    nombre: 'Parque Ecológico La María',
-    descripcion: 'Hermoso entorno ecológico y recreativo. Es un destino predilecto para caminatas al aire libre, acampar, observar aves y conectarse directamente con la naturaleza local.',
+    nombre: 'Parque Ecológico y Recreativo La María',
+    descripcion: `Este hermoso parque, alberga múltiples atractivos como el parque interactivo de tránsito, las canchas de fútbol, voleibol y tejo; los kioscos para asados familiares, el lago, los atractivos para niños, las llamas y la piscina que está en construcción. También se encuentra espacios para caminatas, actividades familiares, camping, eventos, entre otros.
+
+El Parque Ecológico y Recreativo “La María” donado por el señor Agustín Parra, habitante de Simijaca y de propiedad del municipio. Es un espacio de esparcimiento y aprovechamiento del tiempo libre para las familias simijenses y visitantes, donde se puede disfrutar de un hermoso paisaje, hacer asados, acampar y pasar gratos momentos de contacto con el medio natural que brinda el parque.`,
     servicios: ['Senderismo guiado', 'Zona de camping', 'Avistamiento de fauna'],
-    banner: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop',
+    contacto: {
+      direccion: 'Calle 7 No. 7-42, Simijaca',
+      telefono: '(+57) 3219876558',
+      email: 'alcaldia@simijaca-cundinamarca.gov.co'
+    },
+    comoLlegar: {
+      mapaIframe: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.357982323091!2d-73.842041!3d5.513768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e41b557dfa6300d%3A0x431740abd59ec5dd!2sParque%20Ecol%C3%B3gico%20y%20Recreativo%20La%20Mar%C3%ADa!5e0!3m2!1ses-419!2sco!4v1782279136575!5m2!1ses-419!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>',
+      link: 'https://maps.app.goo.gl/m9wRuH42wBoJep2k7'
+    },
+    banner: '/maria/fotos maria (1).JPG',
     galeria: [
-      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop'
+      '/maria/fotos maria (1).JPG',
+      '/maria/fotos maria (2).JPG',
+      '/maria/fotos maria (3).JPG',
+      '/maria/fotos maria (4).JPG',
+      '/maria/fotos maria (5).JPG',
+      '/maria/fotos maria (6).JPG',
+      '/maria/fotos maria (7).JPG',
+      '/maria/fotos maria (8).JPG',
+      '/maria/fotos maria (9).JPG',
+      '/maria/fotos maria (10).JPG',
+      '/maria/fotos maria (11).JPG',
+      '/maria/fotos maria (12).JPG'
     ],
-    imagen360: '/360/prueba3.jpg',
+    imagen360: '/360/pw.webp',
     yaw: 90,
     pitch: 0,
     video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
