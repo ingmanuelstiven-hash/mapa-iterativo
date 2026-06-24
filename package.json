@@ -5,25 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
+    "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@egjs/react-view360": "^3.0.4",
     "@egjs/view360": "^3.6.4",
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2"
+    "react-router-dom": "^7.14.2",
+    "vite": "^8.0.10"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.0.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.13",
-    "tailwindcss": "^4.0.0",
-    "vite": "^8.0.10"
+    "tailwindcss": "^4.0.0"
   }
 }
